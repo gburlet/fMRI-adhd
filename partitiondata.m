@@ -3,7 +3,7 @@ function [Xtrain, Xtest, ytrain, ytest] = partitiondata(X, y, train_percent, cla
 % datasets. Splits the data to have equal portions of class labels in
 % each set.
 %
-% Paramaters:
+% Parameters:
 %   X [NumSubjects, NumTimeSlices, NumFeatures]: fMRI scan data
 %   y [NumSubjects, 1]: class labels
 %   train_percent: percentage of dataset to allocate for training
