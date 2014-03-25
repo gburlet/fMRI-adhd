@@ -4,30 +4,18 @@ function [cv_inds] = partitionfolds(X, y, K, classes)
 %   Note: folds are filled with equal distribution of class labels
 %
 %   Parameters:
+%   X: training dataset
+%   y: training labels
+%   K: number of folds
 %   classes: structure of classes to consider. For example, to disclude (2, impulsive)
 %            types from the dataset, let classes = {0, 1, 3}; To combine classes,
 %            for example to do binary ADHD classification, let classes = {0, 1:3};
 
 [numS, numT, numF] = size(X);
 
-% remove unwanted classes
-delclass = setdiff(unique(y), unique([classes{:}]));
-if length(delclass)
-    X(y == delclass,:,:) = [];
-    y(y == delclass) = [];
-end
-
 class_partition = cell(length(classes), K);
 for cidx = 1:length(classes)
-    % relabel classes
     class_lbl = cidx-1;
-    if length(classes{cidx}) > 1
-        % combine classes
-        y(ismember(y, classes{cidx})) = class_lbl;
-    else
-        y(y == classes{cidx}) = class_lbl;
-    end
-
     class_subset_ind = find(y == class_lbl);
     num_class_samples = length(class_subset_ind);
     % partition the class subset into k folds

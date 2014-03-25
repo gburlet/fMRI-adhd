@@ -13,25 +13,10 @@ function [Xtrain, Xtest, ytrain, ytest] = partitiondata(X, y, train_percent, cla
 
 [numS, numT, numF] = size(X);
 
-% remove unwanted classes
-delclass = setdiff(unique(y), unique([classes{:}]));
-if length(delclass)
-    X(y == delclass,:,:) = [];
-    y(y == delclass) = [];
-end
-
+% calculate class counts
 class_counts = zeros(1, length(classes));
 for cidx = 1:length(classes)
-    % relabel classes
-    class_lbl = cidx-1;
-    if length(classes{cidx}) > 1
-        % combine classes
-        y(ismember(y, classes{cidx})) = class_lbl;
-    else
-        y(y == classes{cidx}) = class_lbl;
-    end
-
-    class_counts(cidx) = sum(y == class_lbl);
+    class_counts(cidx) = sum(y == cidx-1);
 end
 
 % partition data

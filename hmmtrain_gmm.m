@@ -1,4 +1,4 @@
-function [hmm] = hmmtrain_gmm(Xtrain, N, K, random_init)
+function [hmm] = hmmtrain_gmm(Xtrain, N, K, random_init, rand_restarts)
 %HMMTRAIN_GMM trains an HMM with a Gaussian mixture model emission distribution
 %   from the training data Xtrain with the number of states N and number of mixtures K. 
 %   random_init is a boolean specifying whether to randomly initialize certain model parameters. 
@@ -18,6 +18,6 @@ function [hmm] = hmmtrain_gmm(Xtrain, N, K, random_init)
 
     % train HMM
     hmm = hmmFit(Obs, N, 'mixGaussTied', 'nmix', K, ...
-                 'maxIter', 1000, 'convTol', 1e-7, ...
-                 'nRandomRestarts', 3, 'verbose', true, vars{:});
+                 'maxIter', 100, 'convTol', 1e-7, ...
+                 'nRandomRestarts', rand_restarts, 'verbose', false, vars{:});
 end

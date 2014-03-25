@@ -1,4 +1,4 @@
-function [hmm] = hmmtrain_mvg(Xtrain, N, random_init)
+function [hmm] = hmmtrain_mvg(Xtrain, N, random_init, rand_restarts)
 %HMMTRAIN_MVG trains an HMM with a multivariate gaussian emission distribution
 %   from the training data Xtrain with the number of states N. 
 %   random_init is a boolean specifying whether to approximate certain parameters 
@@ -25,6 +25,6 @@ function [hmm] = hmmtrain_mvg(Xtrain, N, random_init)
 
     % train HMM
     hmm = hmmFit(Obs, N, 'gauss', ...
-                 'maxIter', 1000, 'convTol', 1e-7, ...
-                 'nRandomRestarts', 3, 'verbose', true, vars{:});
+                 'maxIter', 100, 'convTol', 1e-7, ...
+                 'nRandomRestarts', rand_restarts, 'verbose', false, vars{:});
 end
